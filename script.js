@@ -1,38 +1,10 @@
 
-/*const exchangeRates = {
-    usd: 0.92,  // US Dollar
-    gbp: 1.13,  // British Pound
-    jpy: 0.007, // Japanese Yen
-    eur: 1,     // Euro
-    hkd: 0.12,  // Hong Kong Dollar
-    mad: 0.09,  // Moroccan Dirham
-    tzs: 0.00037, // Tanzanian Shilling
-    gmd: 0.016,   // Gambian Dalasi
-    idr: 0.00006, // Indonesian Rupiah
-    aud: 0.62,    // Australian Dollar
-    cad: 0.67,    // Canadian Dollar
-    cny: 0.13,    // Chinese Yuan
-    inr: 0.011,   // Indian Rupee
-    sgd: 0.69,    // Singapore Dollar
-    vnd: 0.000038, // Vietnamese Dong
-    all: 0.0086,   // Albanian Lek
-    khr: 0.024,  // Cambodian Riel
-    bef: 0.025,    // Belgian Franc (old coin, historical value)
-    pln: 0.24,     // Polish Zloty
-    kes: 0.0066,   // Kenyan Shilling
-    aed: 0.25,     // United Arab Emirates Dirham (Dubai currency)
-    cdf: 0.00037,  // Congolese Franc
-    thb: 0.026,    // Thai Baht
-    // Add more currencies as needed
-};*/
-
-// Replace this with your actual API key from ExchangeRate-API
-const API_KEY = "d80297a3386139e33e7ba89a";
+const API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXX";
 const API_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/EUR`;
 
 let exchangeRates = {};
 
-// Function to fetch exchange rates dynamically
+// get realtime exchange rates 
 async function fetchExchangeRates() {
     try {
         const response = await fetch(API_URL);
@@ -59,11 +31,10 @@ const overviewTable = document.querySelector('#overview tbody');
 
 let biljetCollection = JSON.parse(localStorage.getItem('biljetCollection')) || {};
 
-// Populate the currency dropdown
+// dropdown
 function populateCurrencyDropdown() {
-    currencySelect.innerHTML = ''; // Clear existing options
+    currencySelect.innerHTML = '';
 
-    // Add default option first
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
     defaultOption.disabled = true;
@@ -71,7 +42,7 @@ function populateCurrencyDropdown() {
     defaultOption.textContent = 'Search or select currency...';
     currencySelect.appendChild(defaultOption);
 
-    // Populate dropdown with all available currencies
+    // dropdown
     Object.keys(exchangeRates).forEach((code) => {
         const name = new Intl.DisplayNames(['en'], { type: 'currency' }).of(code) || code;
 
@@ -96,7 +67,7 @@ function updateOverview() {
             return;
         }
 
-        // Correct conversion: Divide by rate to get the value in EUR
+        // get value in euro
         const valueInEUR = data.amount / rate;
         total += valueInEUR;
 
@@ -134,7 +105,7 @@ function addBiljet(e) {
         amount: (biljetCollection[currency]?.amount || 0) + amount
     };
 
-    // Reset the form and update the overview
+    // reset
     form.reset();
     updateOverview();
 }
@@ -155,7 +126,7 @@ function deleteBiljet(currency) {
     updateOverview();
 }
 
-// Initialize
+// initialize
 fetchExchangeRates();
 form.addEventListener('submit', addBiljet);
 
@@ -165,7 +136,7 @@ const newCurrencyInput = document.querySelector('#new-currency');
 const exchangeRateInput = document.querySelector('#exchange-rate');
 
 
-// Function to add a new currency
+// add a new currency
 function addNewCurrency(e) {
     e.preventDefault();
 
@@ -184,18 +155,18 @@ function addNewCurrency(e) {
         return alert('This currency already exists in the list.');
     }
 
-    // Add the new currency to the exchangeRates object
+    // Add to exchangeRates 
     exchangeRates[newCurrencyCode] = exchangeRate;
 
-    // Update the currency dropdown by clearing and repopulating it
+    // update dropdown 
     populateCurrencyDropdown();
 
-    // Reset the form
+    // reset 
     addCurrencyForm.reset();
 
     alert(`Currency ${newCurrencyCode} with exchange rate ${exchangeRate} added successfully!`);
 }
 
 
-// Add event listener for the add currency form
+// event listener for add currency
 addCurrencyForm.addEventListener('submit', addNewCurrency);
