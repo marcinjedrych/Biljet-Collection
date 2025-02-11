@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biljet Collection Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Biljet Collection Tracker</h1>
+
+    <div class="container">
+        <!-- Add Biljet Section -->
+        <div class="section">
+            <h2>Add New Biljet</h2>
+            <form id="biljet-form">
+                <label for="currency">Currency:</label>
+                <select id="currency" required>
+                    <option value="" disabled selected>Search or select currency...</option>
+                </select>
+
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" step="0.01" required>
+
+                <button type="submit">Add</button>
+            </form>
+
+            <h2>Add New Currency</h2>
+            <form id="add-currency-form">
+                <label for="new-currency">Currency Code:</label>
+                <input type="text" id="new-currency" maxlength="3" placeholder="e.g., XYZ" required>
+
+                <label for="exchange-rate">Exchange Rate (against EUR):</label>
+                <input type="number" id="exchange-rate" step="0.0001" required>
+
+                <button type="submit">Add Currency</button>
+            </form>
+
+        </div>
+
+        <!-- Overview Section -->
+        <div class="section">
+            <h2>Total in Euros: €<span id="total">0.00</span></h2>
+            <h3>Biljet Overview</h3>
+            <table id="overview">
+                <thead>
+                    <tr>
+                        <th>Currency</th>
+                        <th>Amount</th>
+                        <th>Value in EUR</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
